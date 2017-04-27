@@ -1,0 +1,45 @@
+{
+    "conf_file":                    "sgidl.conf",
+    "magazines":
+    {
+        "Nuovo Rinascimento":
+        {
+            "base_url_fmt":         "http://www.sgi-italia.org/riviste/nr/{0}",
+            "login_page":           "authlog.php",
+            "mag_list_page":        "NumeriPrecOnline.php?R=0",
+            "xpath": 
+            {
+                "title_replace": [ "Leggi ", "" ],
+                "extract_title":    "./a[1]/text()[2]",
+                "extract_url":      "./a[2]/@href",
+                "magazines":        "//div[contains(@class,'copertinasmall')]"
+            },
+            "login_post": 
+            {
+                "action":           "LOGIN", 
+                "idrivista":        0,
+                "login":            "Accedi"
+            }
+        },
+
+        "Buddismo e Società":
+        {
+            "base_url_fmt":         "http://www.sgi-italia.org/riviste/bs/{0}",
+            "login_page":           "authlog.php",
+            "mag_list_page":        "RivisteOnLine.php?R=1",
+            "xpath":
+            {
+                "title_replace": [ "Leggi online il N. ", "BS " ],
+                "extract_title":    "./a[1]/text()[3]",
+                "extract_url":      "./a[2]/@href",
+                "magazines":        "//div[@id='colonnadestra']/div[1]/div[position() > 1]"
+            },
+            "login_post":
+            { 
+                "action":           "LOGIN", 
+                "idrivista":        1, 
+                "login":            "Accedi"
+            }
+        }
+    }
+}
