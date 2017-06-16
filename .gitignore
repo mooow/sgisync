@@ -1,0 +1,8 @@
+__pycache__
+client_secrets.json
+credentials.json
+log
+message.txt
+smtp.json
+confdialog.py
+sgidl.cfg
