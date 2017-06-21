@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # This file is part of SgiSync
 # Copyright (C) 2017 Lorenzo Mureu <mureulor@gmail.com>
 #
@@ -28,11 +30,13 @@ import smtplib
 from sys import stderr
 
 DEFINES_FILE = "defines.json"
-CONF_FILE = "sgidl_login.conf"
+CONF_FILE = "sgidl.cfg"
 USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+
 class SgiDownloader:
     def __init__(self):
         self.__dict__.update(json.load(open(DEFINES_FILE, 'r')))
+        self.set_magazine(list(self.magazines.keys())[0])
         self.session = requests.Session()
         self.session.headers['User-Agent'] = USER_AGENT
 
@@ -72,9 +76,14 @@ class SgiDownloader:
 
     def download(self, title):
         url = self._url_fmt(self.issues[title])
-        obj = self.session.get(url).content
         fname = "{0}.pdf".format(title).replace(" ", "_")
+        mime = self.session.head(url).headers["Content-Type"]
+        if mime != 'application/x-download':
+            print("Wrong mime type: {0}. Not downloading, \
+it's probably not going to work anyways.".format(mime))
+            return
         print("Downloading {0} from {1} into {2}".format(title, url, fname))
+        obj = self.session.get(url).content
         try:
             pdf = open(fname, "wb")
             pdf.write(obj)
@@ -106,3 +115,10 @@ class SgiDownloader:
             fp = open(CONF_FILE, "w")
             fp.write(json.dumps(self._mag()['login_post']))
             fp.close()
+
+    def __test__(self, i=1):
+        self.loadconf()
+        self.login()
+        self.load_issues()
+        self.list()
+        self.download_until(i)

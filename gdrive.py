@@ -22,7 +22,7 @@
 import pydrive.auth, pydrive.drive
 from string import ascii_letters as letters, digits
 
-CREDENTIALS = 'gdrive_credentials.json'
+CREDENTIALS = 'credentials.json'
 
 class GoogleDrive(object):
     def __init__(self):
