@@ -1,8 +1,4 @@
 __pycache__
 client_secrets.json
-credentials.json
-log
-message.txt
-smtp.json
-confdialog.py
-sgidl.cfg
+gdrive_credentials.json
+sgidl_login.conf

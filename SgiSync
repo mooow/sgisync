@@ -32,37 +32,39 @@ class SgiSync(object):
     def __init__(self):
         self.sgidl = SgiDownloader()
         self.gdrive = GoogleDrive()
-    
+
     def _extract_numbers(self, string):
         try:
             return re.findall("\d+", string)[0]
         except IndexError:
             print("[ERROR] Couldn't extract issue number from string [{0}].".format(string), file=stderr); exit(1)
-    
+
     def sync(self, magazine, gd_folder):
         self.sgidl.set_magazine(magazine)
         self.sgidl.loadconf()
         self.sgidl.login()
         self.sgidl.load_issues()
-        
+
         path_id = self.gdrive.resolve_path(gd_folder)
         print("{0} has id [{1}]".format(gd_folder, path_id))
         if path_id is None:
             print("[ERROR] Folder {0} not found in Google Drive.".format(gd_folder), file=stderr); exit(1)
-        
+
         gdfiles = sorted(list(map(self._extract_numbers, self.gdrive.list_dir(path_id))))
         print("List of files in drive://{0}: {1}".format(gd_folder, gdfiles))
-        
+
         good = []
         for issue in self.sgidl.issues:
             url = self.sgidl.issues[issue]
             number = self._extract_numbers(issue)
+            #print(number)
             try:
                 gdfiles.index(number)
                 good.append(number)
             except ValueError:
                 print("Downloading {0} from {1}".format(issue, url))
                 fname = self.sgidl.download(issue)
+                if fname == None: continue
                 print("Uploading {0} to Google Drive".format(issue))
                 self.gdrive.upload(fname, path_id)
                 os.remove(fname)
@@ -79,4 +81,3 @@ def __main():
             sgis.sync(*item)
 if __name__ == "__main__":
     __main()
-

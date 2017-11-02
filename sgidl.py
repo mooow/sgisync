@@ -76,12 +76,11 @@ class SgiDownloader:
 
     def download(self, title):
         url = self._url_fmt(self.issues[title])
-        fname = "{0}.pdf".format(title).replace(" ", "_")
-        mime = self.session.head(url).headers["Content-Type"]
-        if mime != 'application/x-download':
-            print("Wrong mime type: {0}. Not downloading, \
-it's probably not going to work anyways.".format(mime))
-            return
+        mime = self.session.head(url).headers['Content-Type']
+        if  mime != 'application/x-download':
+            print("Skipping {}: Content-Type={}".format(title, mime))
+            return None
+
         print("Downloading {0} from {1} into {2}".format(title, url, fname))
         obj = self.session.get(url).content
         try:
