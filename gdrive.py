@@ -27,7 +27,7 @@ CREDENTIALS = 'gdrive_credentials.json'
 class GoogleDrive(object):
     def __init__(self):
         self.__drive_init__()
-    
+
     def __drive_init__(self):
         self.gauth = pydrive.auth.GoogleAuth()
         self.gauth.LoadCredentialsFile(CREDENTIALS)
@@ -35,7 +35,7 @@ class GoogleDrive(object):
             self.gauth.LocalWebserverAuth()
             self.gauth.SaveCredentialsFile(CREDENTIALS)
         self.drive = pydrive.drive.GoogleDrive(self.gauth)
-    
+
     def resolve_path(self, path):
         parent = 'root'
         for p in path.split('/'):
@@ -45,7 +45,7 @@ class GoogleDrive(object):
                 parent = gd_file['id']
             except IndexError: return None
         return parent
-            
+
     def _normalize(self, string):
         forbidden = '\\\''
         res = ""
@@ -53,27 +53,27 @@ class GoogleDrive(object):
             if char not in forbidden:
                 res += char
         return res
-    
+
     def _query(self, query):
         return self.drive.ListFile({'q': query, 'orderBy': 'recency'}).GetList()
-    
+
     def get(self, name, parent):
         name = self._normalize(name)
         parent = self._normalize(parent)
         query = "title = '{0}' and '{1}' in parents".format(name, parent)
         return self._query(query)
-    
+
     def from_id(self, id):
         id = self._normalize(id)
         obj = self.drive.CreateFile({'id': id})
         obj.FetchMetadata()
         return obj
-    
+
     def upload(self, filename, parentID = 'root'):
         file1 = self.drive.CreateFile({'title': filename, 'parents': [{'id': parentID}]})
         file1.SetContentFile(filename)
         file1.Upload()
-        
+
     def list_dir(self, dirID):
         res = []
         for file in self._query("'{0}' in parents and mimeType != 'application/vnd.google-apps.folder'".format(dirID)):
