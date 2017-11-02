@@ -76,6 +76,6 @@ class GoogleDrive(object):
 
     def list_dir(self, dirID):
         res = []
-        for file in self._query("'{0}' in parents and mimeType != 'application/vnd.google-apps.folder'".format(dirID)):
+        for file in self._query("'{0}' in parents and mimeType != 'application/vnd.google-apps.folder' and trashed=false".format(dirID)):
             res.append(file['title'])
         return res
