@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+
+prog="sgisync"
+dir="${HOME}/${prog}"
+logfile="${dir}/${prog}.log"
+cd "$dir"
+
+:() {
+	cmd=$1
+	shift
+	"$cmd" "$@" &>> "$logfile"
+}
+
+_line() {
+	: echo -e "------------------------------"
+}
+
+_head() {
+	_line
+	: date
+	_line
+}
+
+_foot() {
+	: echo
+}
+
+main() {
+
+	_head
+	: ./SgiSync
+	_foot
+}
+
+main

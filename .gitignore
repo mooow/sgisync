@@ -2,3 +2,4 @@ __pycache__
 client_secrets.json
 gdrive_credentials.json
 sgidl_login.conf
+*.log
