@@ -30,6 +30,8 @@ from sys import stderr
 DEFINES_FILE = "defines.json"
 CONF_FILE = "sgidl_login.conf"
 USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+ACCEPTED_MIMETYPES = [ "application/pdf", "application/x-download" ]
+
 class SgiDownloader:
     def __init__(self):
         self.__dict__.update(json.load(open(DEFINES_FILE, 'r')))
@@ -73,7 +75,7 @@ class SgiDownloader:
     def download(self, title):
         url = self._url_fmt(self.issues[title])
         mime = self.session.head(url).headers['Content-Type']
-        if  mime != 'application/x-download':
+        if  mime not in ACCEPTED_MIMETYPES:
             print("Skipping {}: Content-Type={}".format(title, mime))
             return None
 
