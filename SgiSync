@@ -76,7 +76,7 @@ class SgiSync(object):
                 self.gdrive.upload(fname, path_id)
                 os.remove(fname)
         good.sort()
-        print("These issues where already on gdrive: ", good)
+        print("These issues where already on gdrive:", good, "\n")
 
 
 
