@@ -28,7 +28,6 @@ import smtplib
 from sys import stderr
 
 DEFINES_FILE = "defines.json"
-CONF_FILE = "sgidl_login.conf"
 USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 ACCEPTED_MIMETYPES = [ "application/pdf", "application/x-download" ]
 
@@ -106,13 +105,13 @@ class SgiDownloader:
         return list( self.magazines.keys())
 
     def loadconf(self):
-        if os.path.exists(CONF_FILE):
-            fp = open(CONF_FILE, "r")
+        if os.path.exists(self.credentials_file):
+            fp = open(self.credentials_file, "r")
             self._mag()['login_post'].update(json.loads(fp.read()))
             fp.close()
         else:
             self._mag()['login_post']['user'] = input("Username: ")
             self._mag()['login_post']['password'] = input("Password: ")
-            fp = open(CONF_FILE, "w")
+            fp = open(self.credentials_file, "w")
             fp.write(json.dumps(self._mag()['login_post']))
             fp.close()
