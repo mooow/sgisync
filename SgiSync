@@ -57,6 +57,9 @@ class SgiSync(object):
         gdfiles = sorted(list(map(self._extract_numbers, self.gdrive.list_dir(path_id))))
         print("List of files in drive://{0}: {1}".format(gd_folder, gdfiles))
 
+        site_files = sorted(list(map(self._extract_numbers, self.sgidl.issues.keys())))
+        print("List of issues on //SGI/{0}: {1}".format(magazine, site_files))
+
         good = []
         for issue in self.sgidl.issues:
             url = self.sgidl.issues[issue]
