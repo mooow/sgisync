@@ -6,6 +6,7 @@
         {
             "base_url_fmt":         "http://www.sgi-italia.org/riviste/nr/{0}",
             "login_page":           "authlog.php",
+            "home_page":            "home2.php",
             "mag_list_page":        "NumeriPrecOnline.php?R=0",
             "xpath": 
             {
@@ -26,6 +27,7 @@
         {
             "base_url_fmt":         "http://www.sgi-italia.org/riviste/bs/{0}",
             "login_page":           "authlog.php",
+            "home_page":            "home2.php",
             "mag_list_page":        "RivisteOnLine.php?R=1",
             "xpath":
             {

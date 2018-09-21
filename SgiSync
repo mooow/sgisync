@@ -42,7 +42,11 @@ class SgiSync(object):
     def sync(self, magazine, gd_folder):
         self.sgidl.set_magazine(magazine)
         self.sgidl.loadconf()
-        self.sgidl.login()
+
+        if not self.sgidl.login():
+            print("Login failed.")
+            return
+
         self.sgidl.load_issues()
 
         path_id = self.gdrive.resolve_path(gd_folder)

@@ -97,7 +97,10 @@ class SgiDownloader:
             self.download(ref)
 
     def login(self):
-        self.session.post(self._login_url(), data=self._mag()['login_post'])
+        data = self._mag()['login_post']
+        res = self.session.post(self._login_url(), data=data)
+        self.logged_in = res.url.endswith(self._mag()["home_page"])
+        return self.logged_in
 
     def get_magazines(self):
         return list( self.magazines.keys())
