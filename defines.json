@@ -4,7 +4,7 @@
     {
         "Nuovo Rinascimento":
         {
-            "base_url_fmt":         "http://www.sgi-italia.org/riviste/nr/{0}",
+            "base_url_fmt":         "https://www.sgi-italia.org/riviste/nr/{0}",
             "login_page":           "authlog.php",
             "home_page":            "home2.php",
             "mag_list_page":        "NumeriPrecOnline.php?R=0",
@@ -25,7 +25,7 @@
 
         "Buddismo e Società":
         {
-            "base_url_fmt":         "http://www.sgi-italia.org/riviste/bs/{0}",
+            "base_url_fmt":         "https://www.sgi-italia.org/riviste/bs/{0}",
             "login_page":           "authlog.php",
             "home_page":            "home2.php",
             "mag_list_page":        "RivisteOnLine.php?R=1",
